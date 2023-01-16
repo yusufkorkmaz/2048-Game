@@ -1,0 +1,132 @@
+html,
+body {
+    background-color: #FAF8EF;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 200px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.title {
+    color: #776E65;
+    font-size: 80px;
+    font-weight: bold;
+    margin-bottom: 52px;
+}
+
+.scoreAndNewGameButtonContainer {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.scoreContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.scoreCard, .bestScoreCard {
+    background-color:#BBADA0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    padding: 5px 20px;
+}
+
+.scoreHeader, .bestScoreHeader {
+    color: #FAF8EF;
+    font-size: 24px;
+    margin: 0;
+}
+
+.scoreText, .bestScoreText {
+    font-size: 36px;
+    color: white;
+    margin: 0;
+}
+
+.newGameButton {
+    background-color: #8f7a66;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 0 20px;
+    border: none;
+    cursor: pointer;
+    height: 40px;
+}
+
+.board {
+    background-color: #BBADA0;
+    display: grid;
+    row-gap: 15px;
+    column-gap: 15px;
+    grid-template-columns: repeat(4, 106.25px);
+    grid-template-rows: repeat(4, 106.25px);
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.cell {
+    width: 106.25px;
+    height: 106.25px;
+    background-color: #CDC0B4;
+    border-radius: 3px;
+}
+
+@media screen and (max-width: 520px) {
+    .board {
+        grid-template-columns: repeat(4, 57.5px);
+        grid-template-rows: repeat(4, 57.5px);
+        padding: 10px;
+    }
+
+    .cell {
+        width: 57.5px;
+        height: 57.5px;
+    }
+
+    p {
+        font-size: 50px;
+    }
+
+    .scoreAndNewGameButtonContainer {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .scoreContainer {
+        justify-content: space-around;
+    }
+
+    .scoreHeader, .bestScoreHeader {
+        font-size: 18px;
+    }
+    
+    .scoreText, .bestScoreText {
+        font-size: 28px;
+    }
+}
