@@ -8,7 +8,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 200px;
 }
 
 .header {
@@ -26,7 +25,7 @@ body {
     margin-bottom: 52px;
 }
 
-.scoreAndNewGameButtonContainer {
+.scoreAndNewGameButtondiv {
     width: 100%;
     max-width: 500px;
     display: flex;
@@ -34,7 +33,7 @@ body {
     align-items: center; 
 }
 
-.scoreContainer {
+.scorediv {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -93,7 +92,21 @@ body {
     width: 106.25px;
     height: 106.25px;
     background-color: #CDC0B4;
-    border-radius: 3px;
+    border-radius: 3px; 
+    font-size: 42px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cellWithNumber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 85px;
+    color: white;
+    background-color: #EEE4DA;
 }
 
 @media screen and (max-width: 520px) {
@@ -112,13 +125,13 @@ body {
         font-size: 50px;
     }
 
-    .scoreAndNewGameButtonContainer {
+    .scoreAndNewGameButtondiv {
         flex-direction: column;
         align-items: center;
         margin-bottom: 10px;
     }
 
-    .scoreContainer {
+    .scorediv {
         justify-content: space-around;
     }
 
