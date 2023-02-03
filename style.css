@@ -6,8 +6,8 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .header {
@@ -23,6 +23,7 @@ body {
     font-size: 80px;
     font-weight: bold;
     margin-bottom: 52px;
+    margin-top: 0;
 }
 
 .scoreAndNewGameButtondiv {
@@ -30,7 +31,7 @@ body {
     max-width: 500px;
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
 }
 
 .scorediv {
@@ -43,8 +44,9 @@ body {
     max-width: 300px;
 }
 
-.scoreCard, .bestScoreCard {
-    background-color:#BBADA0;
+.scoreCard,
+.bestScoreCard {
+    background-color: #BBADA0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,13 +55,15 @@ body {
     padding: 5px 20px;
 }
 
-.scoreHeader, .bestScoreHeader {
+.scoreHeader,
+.bestScoreHeader {
     color: #FAF8EF;
     font-size: 24px;
     margin: 0;
 }
 
-.scoreText, .bestScoreText {
+.scoreText,
+.bestScoreText {
     font-size: 36px;
     color: white;
     margin: 0;
@@ -92,7 +96,7 @@ body {
     width: 106.25px;
     height: 106.25px;
     background-color: #CDC0B4;
-    border-radius: 3px; 
+    border-radius: 3px;
     font-size: 42px;
     font-weight: bold;
     display: flex;
@@ -135,11 +139,13 @@ body {
         justify-content: space-around;
     }
 
-    .scoreHeader, .bestScoreHeader {
+    .scoreHeader,
+    .bestScoreHeader {
         font-size: 18px;
     }
-    
-    .scoreText, .bestScoreText {
+
+    .scoreText,
+    .bestScoreText {
         font-size: 28px;
     }
 }
