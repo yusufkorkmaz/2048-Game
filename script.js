@@ -124,7 +124,6 @@ function scrollTheArrayToLeft(array) {
     return array;
 }
 
-
 function scrollTheArrayToRight(array) {
     for (let i = array.length - 1; i >= 0; i--) {
         if (array[i] === null) {
@@ -155,12 +154,12 @@ function sumNumbersInArray(direction, array) {
         }
     }
     else if (direction === 'down' || direction === 'right') {
-        for (let i = 0; i < array.length - 1; i++) {
+        for (let i = array.length - 1; i >= 0; i--) {
             scrollTheArrayToRight(array);
-            for (let j = 0; j < array.length - 1; j++) {
-                if (array[j] === array[j + 1] && array[j] != null && array[j + 1] != null) {
-                    array[j + 1] += array[j];
-                    array[j] = null;
+            for (let j = array.length - 1; j > 0; j--) {
+                if (array[j] === array[j - 1] && array[j] != null && array[j - 1] != null) {
+                    array[j] += array[j - 1];
+                    array[j - 1] = null;
                     anyMoveHappened = true;
                 }
             }
@@ -246,6 +245,7 @@ function hasNextMove() {
 }
 
 gameInit();
+
 document.addEventListener('keydown', (event) => {
     var code = event.code;
 
@@ -270,10 +270,9 @@ document.addEventListener('keydown', (event) => {
         anyMoveHappened = false;
 
         if (isCellMatrixFullControl() && !hasNextMove()) {
-            console.log('Game Over')
+            setTimeout(function () {
+                alert('Game Over');
+            }, 500);
         }
     }
-
-
-
 }, false);
