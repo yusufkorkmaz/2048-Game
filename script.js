@@ -2,6 +2,8 @@ let cellMatrix;
 let rowCount;
 let columnCount;
 let anyMoveHappened;
+const delayMilliseconds = 250;
+let delayingForAnimation = false;
 
 function generateRandomIndexNumber(upperLimit) {
     return Math.floor(Math.random() * upperLimit);
@@ -244,35 +246,49 @@ function hasNextMove() {
     }
 }
 
-gameInit();
-
-document.addEventListener('keydown', (event) => {
-    var code = event.code;
-
-    switch (code) {
-        case 'ArrowUp':
-            arrowUpPressed();
-            break;
-        case 'ArrowDown':
-            arrowDownPressed();
-            break;
-        case 'ArrowRight':
-            arrowRightPressed();
-            break;
-        case 'ArrowLeft':
-            arrowLeftPressed();
-            break;
-    }
-
-    if (anyMoveHappened) {
+function drawTheMove() {
+    drawNumbersOnScene();
+    delayingForAnimation = true;
+    setTimeout(() => {
         generateNewNumber();
         drawNumbersOnScene();
         anyMoveHappened = false;
+        delayingForAnimation = false;
+    }, delayMilliseconds);
+}
 
-        if (isCellMatrixFullControl() && !hasNextMove()) {
-            setTimeout(function () {
-                alert('Game Over');
-            }, 500);
+function gameOverControl() {
+    if (isCellMatrixFullControl() && !hasNextMove()) {
+        setTimeout(function () {
+            alert('Game Over');
+        }, delayMilliseconds);
+    }
+}
+
+gameInit();
+
+
+document.addEventListener('keydown', (event) => {
+    var code = event.code;
+    if (!delayingForAnimation) {
+        switch (code) {
+            case 'ArrowUp':
+                arrowUpPressed();
+                break;
+            case 'ArrowDown':
+                arrowDownPressed();
+                break;
+            case 'ArrowRight':
+                arrowRightPressed();
+                break;
+            case 'ArrowLeft':
+                arrowLeftPressed();
+                break;
+        }
+
+        if (anyMoveHappened) {
+            drawTheMove();
+            gameOverControl();
         }
     }
-}, false);
+}, false); 
