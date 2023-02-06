@@ -1,9 +1,24 @@
 let cellMatrix;
-let rowCount;
-let columnCount;
 let anyMoveHappened;
+let delayingForAnimation;
+
+const rowCount = 4;
+const columnCount = 4;
 const delayMilliseconds = 250;
-let delayingForAnimation = false;
+const emptyCellBackgroundColor = '#CDC0B4';
+const backgroundColors = {
+    2: '#eee4da',
+    4: '#ede0c8',
+    8: '#f2b179',
+    16: '#f59563',
+    32: '#f67c5f',
+    64: '#f65e3b',
+    128: '#edcf72',
+    256: '#edcc61',
+    512: '#edc850',
+    1024: '#edc53f',
+    2048: '#edc22e',
+};
 
 function generateRandomIndexNumber(upperLimit) {
     return Math.floor(Math.random() * upperLimit);
@@ -36,8 +51,6 @@ function generateNewNumber(number) {
 }
 
 function fillInTheCellMatrix() {
-    rowCount = 4;
-    columnCount = 4;
     cellMatrix =
         [
             [null, null, null, null],
@@ -57,14 +70,35 @@ function fillInTheCellMatrix() {
 
     cellMatrix[randomFirstNumberRowIndex][randomFirstNumberColumnIndex] = 2;
     cellMatrix[randomSecondNumberRowIndex][randomSecondNumberColumnIndex] = 2;
-
-    //changeCellTextAndBackgroundColor(document.getElementById(randomFirstNumberRowIndex + "-" + randomFirstNumberColumnIndex), "#776E65", "#EEE4DA");
-    //changeCellTextAndBackgroundColor(document.getElementById(randomSecondNumberRowIndex + "-" + randomSecondNumberColumnIndex), "#776E65", "#EEE4DA");
 }
 
-function changeCellTextAndBackgroundColor(element, textColor, backgroundColor) {
-    element.style.color = textColor;
-    element.style.background = backgroundColor;
+function getCellNumberColor(numberInCell) {
+    if (numberInCell === 2 || numberInCell === 4) {
+        return '#776e65';
+    } else {
+        return '#f9f6f2';
+    }
+}
+
+function getCellBackgroundColor(numberInCell) {
+    return backgroundColors[numberInCell];
+}
+
+function paintCells() {
+    for (let row = 0; row < rowCount; row++) {
+        for (let column = 0; column < columnCount; column++) {
+            const numberInCell = cellMatrix[row][column];
+            const cell = document.getElementById(row + "-" + column);
+
+            if (cellMatrix[row][column] != null) {
+                cell.style.color = getCellNumberColor(numberInCell);
+                cell.style.background = getCellBackgroundColor(numberInCell);
+            } else {
+                cell.style.removeProperty('color');
+                cell.style.background = emptyCellBackgroundColor;
+            }
+        }
+    }
 }
 
 function getNumbersInColumn(columnIndex) {
@@ -189,11 +223,14 @@ function drawNumbersOnScene() {
         cellElementsArray[index].innerHTML = oneDimensionNumbersOnSceneArray[index];
     }
 
+    paintCells();
 }
 
 function gameInit() {
+    delayingForAnimation = false;
     fillInTheCellMatrix();
     drawNumbersOnScene();
+    paintCells();
 }
 
 function isCellMatrixFullControl() {
@@ -266,7 +303,6 @@ function gameOverControl() {
 }
 
 gameInit();
-
 
 document.addEventListener('keydown', (event) => {
     var code = event.code;
