@@ -180,11 +180,12 @@ function sumNumbersInArray(direction, array) {
     if (direction === 'up' || direction === 'left') {
         for (let i = 0; i < array.length - 1; i++) {
             scrollTheArrayToLeft(array);
-            for (let j = 0; j < array.length - 1; j++) {
+            for (let j = i; j < array.length - 1; j++) {
                 if (array[j] === array[j + 1] && array[j] != null && array[j + 1] != null) {
                     array[j] += array[j + 1];
                     array[j + 1] = null;
                     anyMoveHappened = true;
+                    i++;
                 }
             }
         }
@@ -192,11 +193,12 @@ function sumNumbersInArray(direction, array) {
     else if (direction === 'down' || direction === 'right') {
         for (let i = array.length - 1; i >= 0; i--) {
             scrollTheArrayToRight(array);
-            for (let j = array.length - 1; j > 0; j--) {
+            for (let j = i; j > 0; j--) {
                 if (array[j] === array[j - 1] && array[j] != null && array[j - 1] != null) {
                     array[j] += array[j - 1];
                     array[j - 1] = null;
                     anyMoveHappened = true;
+                    i--;
                 }
             }
         }
