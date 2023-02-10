@@ -1,3 +1,6 @@
+let newGame;
+let score;
+let bestScore;
 let cellMatrix;
 let anyMoveHappened;
 let delayingForAnimation;
@@ -19,6 +22,16 @@ const backgroundColors = {
     1024: '#edc53f',
     2048: '#edc22e',
 };
+
+const getNewGameOnLocalStorage = () => JSON.parse(localStorage.getItem('newGame'));
+const getScoreOnLocalStorage = () => parseInt(localStorage.getItem('score'));
+const getBestScoreOnLocalStorage = () => parseInt(localStorage.getItem('bestScore'));
+const getCellMatrixOnLocalStorage = () => JSON.parse(localStorage.getItem('cellMatrix'));
+
+const setNewGameOnLocalStorage = (newGame) => localStorage.setItem('newGame', JSON.stringify(newGame));
+const setScoreOnLocalStorage = (score) => localStorage.setItem('score', JSON.stringify(score));
+const setBestScoreOnLocalStorage = (bestScore) => localStorage.setItem('bestScore', JSON.stringify(bestScore));
+const setCellMatrixOnLocalStorage = (cellMatrix) => localStorage.setItem('cellMatrix', JSON.stringify(cellMatrix));
 
 function generateRandomIndexNumber(upperLimit) {
     return Math.floor(Math.random() * upperLimit);
@@ -48,6 +61,8 @@ function generateNewNumber(number) {
     } else {
         generateNewNumber(twoOrFour)
     }
+
+    setCellMatrixOnLocalStorage(cellMatrix);
 }
 
 function fillInTheCellMatrix() {
@@ -176,6 +191,16 @@ function scrollTheArrayToRight(array) {
     return array;
 }
 
+function setNewScore(newScore) {
+    setScoreOnLocalStorage(newScore);
+    score += newScore;
+    document.getElementsByClassName('scoreText')[0].innerHTML = score;
+
+    bestScore = Math.max(score, bestScore);
+    document.getElementsByClassName('bestScoreText')[0].innerHTML = bestScore;
+    setBestScoreOnLocalStorage(bestScore);
+}
+
 function sumNumbersInArray(direction, array) {
     if (direction === 'up' || direction === 'left') {
         for (let i = 0; i < array.length - 1; i++) {
@@ -183,6 +208,7 @@ function sumNumbersInArray(direction, array) {
             for (let j = i; j < array.length - 1; j++) {
                 if (array[j] === array[j + 1] && array[j] != null && array[j + 1] != null) {
                     array[j] += array[j + 1];
+                    setNewScore(array[j]);
                     array[j + 1] = null;
                     anyMoveHappened = true;
                     i++;
@@ -196,6 +222,7 @@ function sumNumbersInArray(direction, array) {
             for (let j = i; j > 0; j--) {
                 if (array[j] === array[j - 1] && array[j] != null && array[j - 1] != null) {
                     array[j] += array[j - 1];
+                    setNewScore(array[j]);
                     array[j - 1] = null;
                     anyMoveHappened = true;
                     i--;
@@ -228,26 +255,47 @@ function drawNumbersOnScene() {
     paintCells();
 }
 
+function newGameButtonPressed() {
+    setNewGameOnLocalStorage(true);
+    gameInit();
+}
+
 function gameInit() {
     delayingForAnimation = false;
-    fillInTheCellMatrix();
+    newGame = getNewGameOnLocalStorage();
+    if (newGame === true || newGame === null || newGame === undefined) {
+        setNewGameOnLocalStorage(false);
+        setScoreOnLocalStorage(0);
+        if (bestScore === undefined || bestScore === null) {
+            setBestScoreOnLocalStorage(0);
+        }
+        score = getScoreOnLocalStorage();
+        document.getElementsByClassName('scoreText')[0].innerHTML = getScoreOnLocalStorage();
+        fillInTheCellMatrix();
+        setCellMatrixOnLocalStorage(cellMatrix);
+    } else {
+        score = getScoreOnLocalStorage();
+        document.getElementsByClassName('scoreText')[0].innerHTML = score;
+        cellMatrix = getCellMatrixOnLocalStorage();
+    }
+    bestScore = getBestScoreOnLocalStorage();
+    document.getElementsByClassName('bestScoreText')[0].innerHTML = bestScore;
     drawNumbersOnScene();
     paintCells();
 }
 
 function isCellMatrixFullControl() {
-    let counter = 0;
+    let filledCellCounter = 0;
     for (let row = 0; row < rowCount; row++) {
         for (let column = 0; column < columnCount; column++) {
             if (cellMatrix[row][column] === null) {
                 return false;
             } else {
-                counter++;
+                filledCellCounter++;
             }
         }
     }
-
-    if (counter === rowCount * columnCount) {
+    if (filledCellCounter === rowCount * columnCount) {
         return true;
     } else {
         return false;
@@ -293,14 +341,23 @@ function drawTheMove() {
         drawNumbersOnScene();
         anyMoveHappened = false;
         delayingForAnimation = false;
-    }, delayMilliseconds);
+    }, 0);
+}
+
+function saveGame() {
+    localStorage.setItem('score', score);
+    localStorage.setItem('bestScore', bestScore);
+    localStorage.setItem('cellMatrix', JSON.stringify(cellMatrix));
 }
 
 function gameOverControl() {
     if (isCellMatrixFullControl() && !hasNextMove()) {
+        console.log('Game Over log');
         setTimeout(function () {
             alert('Game Over');
         }, delayMilliseconds);
+    } else {
+        saveGame();
     }
 }
 
@@ -329,4 +386,4 @@ document.addEventListener('keydown', (event) => {
             gameOverControl();
         }
     }
-}, false); 
+}, false);  
