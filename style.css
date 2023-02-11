@@ -26,12 +26,13 @@ body {
     margin-top: 0;
 }
 
-.scoreAndNewGameButtondiv {
+.scoreAndNewGameButtonSection {
     width: 100%;
     max-width: 500px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .scoreDiv {
@@ -75,9 +76,13 @@ body {
     font-size: 18px;
     font-weight: bold;
     border-radius: 3px;
-    padding: 0 20px;
+    padding: 5px 10px;
     border: none;
     cursor: pointer;
+}
+
+.newGameButton svg {
+    width: 40px;
     height: 40px;
 }
 
@@ -115,10 +120,20 @@ body {
     background-color: #EEE4DA;
 }
 
-.prevent-select {
+* {
     -webkit-user-select: none;
-    -ms-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
     user-select: none;
+}
+
+p {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -o-user-select: text;
+    user-select: text;
 }
 
 @media screen and (max-height: 740px) {
@@ -143,10 +158,8 @@ body {
         margin-bottom: 10px;
     }
 
-    .scoreAndNewGameButtondiv {
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 10px;
+    .scoreAndNewGameButtonSection {
+        max-width: 415px;
     }
 
     .scoreDiv {
@@ -161,6 +174,11 @@ body {
     .scoreText,
     .bestScoreText {
         font-size: 28px;
+    }
+
+    .newGameButton svg {
+        width: 30px;
+        height: 30px;
     }
 }
 
@@ -177,16 +195,30 @@ screen and (max-height: 630px) {
         height: 65px;
         font-size: 30px;
     }
+ 
+    .scoreAndNewGameButtonSection {
+        max-width: 325px;
+    }
+ 
+    .scoreHeader,
+    .bestScoreHeader {
+        font-size: 15px;
+    }
 
-    .scoreAndNewGameButtondiv {
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 10px;
+    .scoreText,
+    .bestScoreText {
+        font-size: 22px;
+    }
+    
+    .newGameButton svg {
+        width: 30px;
+        height: 30px;
     }
 }
 
 
-@media screen and (max-height: 540px) {
+@media screen and (max-width: 400px),
+screen and (max-height: 540px) {
     .board {
         grid-template-columns: repeat(4, 55px);
         grid-template-rows: repeat(4, 55px);
@@ -208,10 +240,8 @@ screen and (max-height: 630px) {
         font-size: 40px;
     }
 
-    .scoreAndNewGameButtondiv {
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 10px;
+    .scoreAndNewGameButtonSection {
+        max-width: 270px;
     }
 
     .scoreDiv {
@@ -221,5 +251,10 @@ screen and (max-height: 630px) {
     .scoreText,
     .bestScoreText {
         font-size: 20px;
+    }
+
+    .newGameButton svg {
+        width: 20px;
+        height: 20px;
     }
 }

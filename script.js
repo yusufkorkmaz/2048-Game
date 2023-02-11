@@ -133,6 +133,54 @@ function setNumbersInColumn(columnIndex, numbersArray) {
     }
 }
 
+function anyMoveHappenedControl() {
+    if (anyMoveHappened) {
+        drawTheMove();
+        gameOverControl();
+    }
+}
+
+function getTouches(evt) {
+    return evt.touches || evt.originalEvent.touches;
+}
+
+function handleTouchStart(evt) {
+    const firstTouch = getTouches(evt)[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+};
+
+function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0) {
+            arrowLeftPressed();
+        } else {
+            arrowRightPressed();
+        }
+    } else {
+        if (yDiff > 0) {
+            arrowUpPressed();
+        } else {
+            arrowDownPressed();
+        }
+    }
+    
+    xDown = null;
+    yDown = null;
+
+    anyMoveHappenedControl();
+};
+
 function arrowUpPressed() {
     for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
         const columnArray = getNumbersInColumn(columnIndex);
@@ -364,54 +412,6 @@ function gameOverControl() {
 }
 
 gameInit();
-
-function anyMoveHappenedControl() {
-    if (anyMoveHappened) {
-        drawTheMove();
-        gameOverControl();
-    }
-}
-
-function getTouches(evt) {
-    return evt.touches || evt.originalEvent.touches;
-}
-
-function handleTouchStart(evt) {
-    const firstTouch = getTouches(evt)[0];
-    xDown = firstTouch.clientX;
-    yDown = firstTouch.clientY;
-};
-
-function handleTouchMove(evt) {
-    if (!xDown || !yDown) {
-        return;
-    }
-
-    var xUp = evt.touches[0].clientX;
-    var yUp = evt.touches[0].clientY;
-
-    var xDiff = xDown - xUp;
-    var yDiff = yDown - yUp;
-
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        if (xDiff > 0) {
-            arrowLeftPressed();
-        } else {
-            arrowRightPressed();
-        }
-    } else {
-        if (yDiff > 0) {
-            arrowUpPressed();
-        } else {
-            arrowDownPressed();
-        }
-    }
-    
-    xDown = null;
-    yDown = null;
-
-    anyMoveHappenedControl();
-};
 
 document.addEventListener('touchstart', handleTouchStart, false);
 
