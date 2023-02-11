@@ -203,7 +203,7 @@ function setNewScore(newScore) {
 
 function sumNumbersInArray(direction, array) {
     if (direction === 'up' || direction === 'left') {
-        for (let i = 0; i < array.length - 1; i++) {
+        for (let i = 0; i <= array.length - 1; i++) {
             scrollTheArrayToLeft(array);
             for (let j = i; j < array.length - 1; j++) {
                 if (array[j] === array[j + 1] && array[j] != null && array[j + 1] != null) {
@@ -340,8 +340,8 @@ function drawTheMove() {
         generateNewNumber();
         drawNumbersOnScene();
         anyMoveHappened = false;
-        delayingForAnimation = false; 
-    }, 0);
+        delayingForAnimation = false;
+    }, delayMilliseconds);
 }
 
 function saveGame() {
