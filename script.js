@@ -340,7 +340,7 @@ function drawTheMove() {
         generateNewNumber();
         drawNumbersOnScene();
         anyMoveHappened = false;
-        delayingForAnimation = false;
+        delayingForAnimation = false; 
     }, 0);
 }
 
