@@ -211,8 +211,8 @@ screen and (max-height: 630px) {
     }
     
     .newGameButton svg {
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
     }
 }
 
@@ -251,6 +251,48 @@ screen and (max-height: 540px) {
     .scoreText,
     .bestScoreText {
         font-size: 20px;
+    }
+
+    .newGameButton svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media screen and (max-width: 280px),
+screen and (max-height: 400px) {
+    .board {
+        grid-template-columns: repeat(4, 40px);
+        grid-template-rows: repeat(4, 40px);
+        row-gap: 5px;
+        column-gap: 5px;
+    }
+
+    .cell {
+        width: 40px;
+        height: 40px;
+        font-size: 15px;
+    }
+
+    p {
+        font-size: 30px;
+    }
+
+    .title {
+        font-size: 30px;
+    }
+
+    .scoreAndNewGameButtonSection {
+        max-width: 260px;
+    }
+
+    .scoreDiv {
+        margin-bottom: 12px;
+    }
+
+    .scoreText,
+    .bestScoreText {
+        font-size: 15px;
     }
 
     .newGameButton svg {
