@@ -115,6 +115,12 @@ body {
     background-color: #EEE4DA;
 }
 
+.prevent-select {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 @media screen and (max-height: 740px) {
     .board {
         grid-template-columns: repeat(4, 85px);
@@ -171,12 +177,12 @@ screen and (max-height: 630px) {
         height: 65px;
         font-size: 30px;
     }
- 
+
     .scoreAndNewGameButtondiv {
         flex-direction: column;
         align-items: center;
         margin-bottom: 10px;
-    } 
+    }
 }
 
 
@@ -199,7 +205,7 @@ screen and (max-height: 630px) {
     }
 
     .title {
-        font-size: 40px; 
+        font-size: 40px;
     }
 
     .scoreAndNewGameButtondiv {
@@ -209,9 +215,9 @@ screen and (max-height: 630px) {
     }
 
     .scoreDiv {
-         margin-bottom: 12px;
+        margin-bottom: 12px;
     }
- 
+
     .scoreText,
     .bestScoreText {
         font-size: 20px;
