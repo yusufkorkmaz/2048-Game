@@ -136,7 +136,10 @@ function setNumbersInColumn(columnIndex, numbersArray) {
 function anyMoveHappenedControl() {
     if (anyMoveHappened) {
         drawTheMove();
-        gameOverControl();
+        setTimeout(() => {
+            gameOverControl();
+            saveGame();
+        }, delayMilliseconds);
     }
 }
 
@@ -174,7 +177,7 @@ function handleTouchMove(evt) {
             arrowDownPressed();
         }
     }
-    
+
     xDown = null;
     yDown = null;
 
@@ -308,6 +311,7 @@ function drawNumbersOnScene() {
 function newGameButtonPressed() {
     setNewGameOnLocalStorage(true);
     gameInit();
+    saveGame();
 }
 
 function gameInit() {
@@ -316,7 +320,7 @@ function gameInit() {
     if (newGame === true || newGame === null || newGame === undefined) {
         setNewGameOnLocalStorage(false);
         setScoreOnLocalStorage(0);
-        if (bestScore === undefined || bestScore === null) {
+        if (bestScore === undefined || bestScore === null || isNaN(bestScore)) {
             setBestScoreOnLocalStorage(0);
         }
         score = getScoreOnLocalStorage();
@@ -328,6 +332,7 @@ function gameInit() {
         document.getElementsByClassName('scoreText')[0].innerHTML = score;
         cellMatrix = getCellMatrixOnLocalStorage();
     }
+    gameOverControl();
     bestScore = getBestScoreOnLocalStorage();
     document.getElementsByClassName('bestScoreText')[0].innerHTML = bestScore;
     drawNumbersOnScene();
@@ -402,12 +407,13 @@ function saveGame() {
 
 function gameOverControl() {
     if (isCellMatrixFullControl() && !hasNextMove()) {
-        console.log('Game Over log');
         setTimeout(function () {
-            alert('Game Over');
+            document.getElementsByClassName('board')[0].classList.add('transparentBoard');
+            document.getElementsByClassName('gameOverText')[0].classList.remove('invisible');
         }, delayMilliseconds);
     } else {
-        saveGame();
+        document.getElementsByClassName('board')[0].classList.remove('transparentBoard');
+        document.getElementsByClassName('gameOverText')[0].classList.add('invisible');
     }
 }
 
