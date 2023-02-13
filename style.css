@@ -103,20 +103,20 @@ body {
 }
 
 .transparentBoard {
-    opacity: 0.3;
-    transform: scale(0.9);
+    opacity: 0.3; 
 }
 
 .gameOverText {
     position: absolute;
     top: 30%;
     width: 100%;
+    max-width: 500px;
     height: 100%;
     display: flex;
     justify-content: center;
     font-size: 80px;
     font-weight: bold;
-    color: #776E65; 
+    color: #776E65;
     z-index: 5;
     animation: blurAnimation 750ms;
 }
@@ -126,8 +126,13 @@ body {
 }
 
 @keyframes blurAnimation {
-    0% { -webkit-filter: blur(10px);}
-    100% { -webkit-filter: blur(0px);}
+    0% {
+        -webkit-filter: blur(10px);
+    }
+
+    100% {
+        -webkit-filter: blur(0px);
+    }
 }
 
 .cell {
@@ -191,6 +196,10 @@ p {
         margin-bottom: 10px;
     }
 
+    .gameOverText {
+        font-size: 60px;
+    }
+
     .scoreAndNewGameButtonSection {
         max-width: 415px;
     }
@@ -227,6 +236,10 @@ screen and (max-height: 630px) {
         width: 65px;
         height: 65px;
         font-size: 30px;
+    }
+
+    .gameOverText {
+        font-size: 40px;
     }
 
     .scoreAndNewGameButtonSection {
@@ -273,6 +286,10 @@ screen and (max-height: 540px) {
         font-size: 40px;
     }
 
+    .gameOverText {
+        font-size: 35px;
+    }
+
     .scoreAndNewGameButtonSection {
         max-width: 270px;
     }
@@ -312,6 +329,10 @@ screen and (max-height: 400px) {
     }
 
     .title {
+        font-size: 30px;
+    }
+
+    .gameOverText {
         font-size: 30px;
     }
 

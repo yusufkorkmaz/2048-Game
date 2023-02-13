@@ -314,46 +314,58 @@ function newGameButtonPressed() {
     saveGame();
 }
 
+function resetScore() {
+    setScoreOnLocalStorage(0);
+    score = getScoreOnLocalStorage();
+    document.getElementsByClassName('scoreText')[0].innerHTML = getScoreOnLocalStorage();
+}
+
+function resetBestScore() {
+    if (bestScore === undefined || bestScore === null || isNaN(bestScore)) {
+        setBestScoreOnLocalStorage(0);
+    }
+}
+
+function writeScoreOnScene() {
+    document.getElementsByClassName('scoreText')[0].innerHTML = score;
+}
+
+function writeBestScoreOnScene() {
+    document.getElementsByClassName('bestScoreText')[0].innerHTML = bestScore;
+}
+
 function gameInit() {
     delayingForAnimation = false;
     newGame = getNewGameOnLocalStorage();
     if (newGame === true || newGame === null || newGame === undefined) {
         setNewGameOnLocalStorage(false);
-        setScoreOnLocalStorage(0);
-        if (bestScore === undefined || bestScore === null || isNaN(bestScore)) {
-            setBestScoreOnLocalStorage(0);
-        }
-        score = getScoreOnLocalStorage();
-        document.getElementsByClassName('scoreText')[0].innerHTML = getScoreOnLocalStorage();
+        resetScore();
+        resetBestScore();
         fillInTheCellMatrix();
         setCellMatrixOnLocalStorage(cellMatrix);
     } else {
         score = getScoreOnLocalStorage();
-        document.getElementsByClassName('scoreText')[0].innerHTML = score;
+        writeScoreOnScene();
         cellMatrix = getCellMatrixOnLocalStorage();
     }
     gameOverControl();
     bestScore = getBestScoreOnLocalStorage();
-    document.getElementsByClassName('bestScoreText')[0].innerHTML = bestScore;
+    writeBestScoreOnScene();
     drawNumbersOnScene();
     paintCells();
 }
 
 function isCellMatrixFullControl() {
-    let filledCellCounter = 0;
+    let notNullRowCount = 0;
     for (let row = 0; row < rowCount; row++) {
-        for (let column = 0; column < columnCount; column++) {
-            if (cellMatrix[row][column] === null) {
-                return false;
-            } else {
-                filledCellCounter++;
-            }
+        if (cellMatrix[row].some(cell => cell === null)) {
+            return false;
+        } else {
+            notNullRowCount++;
         }
     }
-    if (filledCellCounter === rowCount * columnCount) {
+    if (notNullRowCount === rowCount) {
         return true;
-    } else {
-        return false;
     }
 }
 
@@ -405,15 +417,23 @@ function saveGame() {
     localStorage.setItem('cellMatrix', JSON.stringify(cellMatrix));
 }
 
-function gameOverControl() {
-    if (isCellMatrixFullControl() && !hasNextMove()) {
-        setTimeout(function () {
-            document.getElementsByClassName('board')[0].classList.add('transparentBoard');
-            document.getElementsByClassName('gameOverText')[0].classList.remove('invisible');
-        }, delayMilliseconds);
+function setVisibleGameOverText(visible) {
+    if (visible) {
+        document.getElementsByClassName('board')[0].classList.add('transparentBoard');
+        document.getElementsByClassName('gameOverText')[0].classList.remove('invisible');
     } else {
         document.getElementsByClassName('board')[0].classList.remove('transparentBoard');
         document.getElementsByClassName('gameOverText')[0].classList.add('invisible');
+    }
+}
+
+function gameOverControl() {
+    if (isCellMatrixFullControl() && !hasNextMove()) {
+        setTimeout(function () {
+            setVisibleGameOverText(true);
+        }, delayMilliseconds);
+    } else {
+        setVisibleGameOverText(false);
     }
 }
 
